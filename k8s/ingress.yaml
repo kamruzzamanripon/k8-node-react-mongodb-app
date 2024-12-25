@@ -3,10 +3,8 @@ kind: Ingress
 metadata:
   name: chatapp-ingress
   namespace: chat-app
-  labels:
-    name: chatapp-ingress
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
   rules:
   - host: "ri-chat.com"
@@ -25,4 +23,4 @@ spec:
           service:
             name: backend
             port: 
-              number: 5001        
+              number: 5001
