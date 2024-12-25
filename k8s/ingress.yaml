@@ -6,7 +6,7 @@ metadata:
   labels:
     name: chatapp-ingress
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: / 
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
   - host: "ri-chat.com"
@@ -19,7 +19,6 @@ spec:
             name: frontend
             port: 
               number: 80
-      
       - pathType: Prefix
         path: "/api"
         backend:

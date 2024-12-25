@@ -4,7 +4,7 @@ metadata:
   name: backend
   namespace: chat-app
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: backend
@@ -24,7 +24,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: backend-secret
-              key: mongodb-uri
+              key: "mongodb-uri"
         - name: PORT
           value: "5001"
         - name: NODE_ENV
