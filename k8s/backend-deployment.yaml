@@ -20,11 +20,13 @@ spec:
         ports:
         - containerPort: 5001
         env:
+        # - name: MONGODB_URI
+        #   valueFrom:
+        #     secretKeyRef:
+        #       name: backend-secret
+        #       key: "mongodb-uri"
         - name: MONGODB_URI
-          valueFrom:
-            secretKeyRef:
-              name: backend-secret
-              key: "mongodb-uri"
+          value: "mongodb://mongoadmin:secret@mongodb:27017/chatApp?authSource=admin"
         - name: PORT
           value: "5001"
         - name: NODE_ENV

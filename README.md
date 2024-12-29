@@ -1,4 +1,4 @@
-## 📝 Introduction:
+## 📝 Introduction About APP:
 
 This project aims to provide a real-time chat experience that's both scalable and secure. With a focus on modern technologies, we're building an application that's easy to use and maintain.
 
@@ -7,19 +7,6 @@ This project aims to provide a real-time chat experience that's both scalable an
 
 
 ![image](https://github.com/user-attachments/assets/f845a188-8e70-42f7-8577-30af38e83053)
-
-
-  - **User Interaction:**
-    - Users interact with the frontend application running in their browser. This includes actions like logging in, sending messages, and navigating through the chat interface.Frontend (React App):The frontend is responsible for rendering the user interface and handling user inputs.It communicates with the backend via HTTP requests (for RESTful APIs) and WebSocket connections (for real-time interactions).
-
-    - **Backend (Node.js/Express + Socket.io):**
-       - The backend handles all the server-side logic.It processes API requests from the frontend to perform actions such as user authentication, message retrieval, and message storage.Socket.io is used to manage real-time bi-directional communication between the frontend and the backend. This allows for instant messaging features, such as showing when users are typing or when new messages are sent.
-
-
-    - **MongoDB (Database):**
-       - MongoDB stores all persistent data for the application, including user profiles, chat messages, and any other relevant data.The backend interacts with MongoDB to retrieve, add, update, or delete data based on the requests it receives from the frontend.
-
-
 
 
 ## ✨ Features:
@@ -69,11 +56,6 @@ PORT=5001
 ```
 > **Note:** Replace `your_jwt_secret_key` with a strong secret key of your choice.
 
-### Clone the Repository
-
-```bash
-git clone https://github.com/iemafzalhassan/full-stack_chatApp.git
-```
 
 ## 🏗️ Build and Run the Application"
 
@@ -93,117 +75,6 @@ docker-compose up -d --build
 ```
 http://localhost
 ```
----
-
-## 🛠️ Getting Started
-
-Follow these simple steps to get the project up and running on your local Host using docker.
-
-```bash
-git clone https://github.com/iemafzalhassan/full-stack_chatApp.git
-```
-
-```bash
-cd full-stack_chatApp
-```
-## Create a Docker network:
-
-```bash
-docker network create full-stack
-```
-
-## 🛠️ Building the Frontend
-
-```bash
-cd frontend
-```
-
-```bash
-docker build -t full-stack_frontend .
-```
-
-### Run the Frontend container:
-
-```bash
-docker run -d --network=full-stack  -p 5173:5173 --name frontend full-stack_frontend:latest
-```
-#### The frontend will now be accessible on port 5173.
-
-
-### Run the MongoDB Container:
-
-```bash
-docker run -d -p 27017:27017 --name mongo mongo:latest
-```
----
-
-## 🛠️ Building the Backend
-
-```bash
-cd backend
-```
-
-### Build the Backend image:
-
-```bash
-docker build -t full-stack_backend .
-```
-
-### Run the Backend container:
-
-```bash
-docker run -d --network=full-stack --add-host=host.docker.internal:host-gateway -p 5001:5001 --env-file .env full-stack_backend
-
-```
-#### This will build and run the backend container, exposing the backendAPI on port 5001.
-
-`Backend API: http://localhost:5001`
-
-### To Verify the conncetion between backend and databse:
-```bash
-docker-compose logs -f
-```
-
-### Once the backend and frontend containers are running, you can access the application in your browser:
-
-`Frontend: http://localhost`
-
-
-You can now interact with the real-time chat app and start messaging!
-
----
-
-
-
-### 🤝 Contributing
-
-
-We welcome contributions from DevOps & Developer of all skill levels! Here's how you can contribute:
-
-**Report bugs:** If you encounter any bugs or issues, please open an issue with detailed information.
-**Suggest features:** Have an idea for a new feature? Open an issue to discuss it with the community.
-**Submit pull requests:** If you have a fix or a feature you'd like to contribute, submit a pull request. Ensure your changes pass any linting or tests, if applicable.
-
-### 🌐 Join the Community
-
-We invite you to join our community of developers and contributors. Let's work together to build an amazing real-time chat application!
-
-* **Star this repository** to show your support
-* **Fork this repository** to contribute to the project
-* **Open an issue** to report bugs or suggest features
-* **Submit a pull request** to contribute code changes
-
-## 🔮 Future Plans
-
-
-This project is evolving, and here are a few exciting things on the horizon:
-
-* [x] **CI/CD Pipelines:** Implement Continuous Integration and Continuous Deployment pipelines to automate testing and deployment.
-* [x] **Kubernetes (K8s):** Add Kubernetes manifests for container orchestration to deploy the app on cloud platforms like AWS, GCP, or Azure.
-* [x] **Feature Expansion:** Add more features like group chats, media sharing, and user status updates.
-* **Stay tuned for updates as we continue to improve and expand this project!**
-
----
 
 ## 📚 Project Snapshots:
 
@@ -214,6 +85,203 @@ This project is evolving, and here are a few exciting things on the horizon:
 ![logout](/frontend/public/logout.png)
 
 ![Login](/frontend/public/login.png)
+
+## 🛠️ Getting Started For k8s
+
+#
+> [!Important]
+> Below table helps you to navigate to the particular tool installation section fast.
+
+| Tech stack    | Installation |
+| -------- | ------- |
+| Docker  | <a href="#docker">Install and configure Docker</a>     |
+| Kind & Kubectl | <a href="#kind">Install and configure Kind & Kubectl</a>     |
+| Metallb | <a href="#metallb">Install Metallb</a>     |
+| Ingress | <a href="#ingress">Install and configure Ingress</a>     |
+| Helm | <a href="#helm">Helm Install and configure</a>     |
+| SSL Certificate | <a href="#ssl_certificate">Install and configure Cert Manager</a>     |
+| Project Deploy | <a href="#project">Project Deploy and Others</a>
+| Monitoring | <a href="#monitor">Namespace Create for Groping Prometheus and grafana and Other</a>
+| Prometheus | <a href="#prometheus">Install and configure Prometheus</a>     |
+| Grafana | <a href="#grafana">Install and configure Grafana</a>     |
+| Clean Up | <a href="#Clean">Clean up</a>     |
+#
+
+### Pre-requisites to implement this project:
+#
+
+> [!Note]
+> vps minimum need 
+
+- <b>RAM - 4GB</b>
+- <b>CPU - 2 Core(s)</b>
+- <b>Storage - 20 GB</b>
+
+#
+- ## <b id="docker">Install and configure Docker</b>
+```bash
+sudo apt-get update
+
+sudo apt-get install docker.io -y
+sudo usermod -aG docker ubuntu && newgrp docker
+
+```
+
+#
+- ## <b id="kind">Install and configure Kind & Kubectl</b>
+Install KIND and kubectl using the provided script:
+```bash
+
+#!/bin/bash
+
+# For AMD64 / x86_64
+[ $(uname -m) = x86_64 ] && curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.26.0/kind-linux-amd64
+chmod +x ./kind
+sudo cp ./kind /usr/local/bin/kind
+
+VERSION="v1.31.0"
+URL="https://dl.k8s.io/release/${VERSION}/bin/linux/amd64/kubectl"
+INSTALL_DIR="/usr/local/bin"
+
+curl -LO "$URL"
+chmod +x kubectl
+sudo mv kubectl $INSTALL_DIR/
+kubectl version --client
+
+rm -f kubectl
+rm -rf kind
+
+echo "kind & kubectl installation complete."
+```
+> [!Note]
+> Run this script and it cerate kubectl and kind environment
+
+### 2. Setting Up the KIND Cluster
+#### Create a kind-cluster-config.yaml file:
+
+```
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+
+nodes:
+- role: control-plane
+  image: kindest/node:v1.31.2
+- role: worker
+  image: kindest/node:v1.31.2
+- role: worker
+  image: kindest/node:v1.31.2
+  extraPortMappings:
+  - containerPort: 80
+    hostPort: 80
+    protocol: TCP
+  - containerPort: 443
+    hostPort: 443
+    protocol: TCP
+```
+Create the cluster using the configuration file:
+```
+kind create cluster --config kind-cluster-config.yaml --name my-kind-cluster
+```
+Verify the cluster:
+```
+kubectl get nodes
+kubectl cluster-info
+```
+> [!Note]
+> Here i add extraPortMappings for running Ingress
+
+
+#
+- ## <b id="metallb">Install Metallb</b>
+> [!Note]
+> I am using Metallb for use LoadBalance. Suppose you are using Aws/Azure/DigitalOcean ect whose provide kubernates loadBalance facility then doesn't need Metallb. Here I buy VPS from a local company. They give one IP address to access VPS.
+
+```
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.14.9/config/manifests/metallb-frr.yaml
+
+```
+Check Metallb configuration
+```
+kubectl get all -n metallb-system
+```
+![image](/asserts/images/Screenshot_5.jpg)
+
+#### Create a metallb_config.yaml file:
+```
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: first-pool
+  namespace: metallb-system
+spec:
+  addresses:
+  - 160.191.163.33-160.191.163.33
+```
+
+apply metallb_config.yaml file
+```
+kubectl apply -f metallb_config.yaml
+```
+> [!Note]
+> MY VPS IP address is 160.191.163.33. Change this IP as your require
+
+
+
+#
+- ## <b id="ingress">Install and configure Ingress</b>
+
+```
+kubectl apply -f https://kind.sigs.k8s.io/examples/ingress/deploy-ingress-nginx.yaml
+```
+![image](/asserts/images/Screenshot_6.jpg)
+
+> [!Note]
+> Here service/ingress-nginx-controller show  EXTERNAL-IP is your VPS IP. My VPS IP is 160.191.163.33. It ensure that Our Metallb LoadBalance wroking.
+
+
+
+
+#
+- ## <b id="helm">Helm Install and configure</b>
+```
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+chmod 700 get_helm.sh
+
+./get_helm.sh
+```
+Check Helm Version
+```
+helm version
+```
+![image](/asserts/images/Screenshot_7.jpg)
+
+
+
+
+#
+- ## <b id="ssl_certificate">Install and configure Cert Manager || SSL Certificate</b>
+```
+helm repo add jetstack https://charts.jetstack.io --force-update
+helm repo update
+```
+Installing cert-manager CRDs
+```
+helm install cert-manager --namespace cert-manager --version v1.16.2 jetstack/cert-manager
+```
+https://artifacthub.io/packages/helm/cert-manager/cert-manager
+
+
+
+
+
+#
+- ## <b id="project">Project Deploy and Others</b>
+
+
+
+
+
+
 
 
 
