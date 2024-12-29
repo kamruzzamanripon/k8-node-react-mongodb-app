@@ -5,9 +5,11 @@ metadata:
   namespace: chat-app
   annotations:
     nginx.ingress.kubernetes.io/use-regex: "true"
+    cert-manager.io/cluster-issuer: kubeissuer
+    kubernetes.io/ingress.class: nginx
 spec:
   rules:
-  - host: "ri-chat.com"
+  - host: "ripon2.syed-kamruzzaman.com"
     http:
       paths:
       - pathType: Prefix
@@ -24,3 +26,7 @@ spec:
             name: backend
             port: 
               number: 5001
+  tls:
+  - hosts:
+    - "ripon2.syed-kamruzzaman.com"
+    secretName: chat-app-tls            

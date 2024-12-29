@@ -23,3 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 .env
+chat.text
+ingress_test.yaml
+kind_cluster_test.yaml
