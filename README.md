@@ -105,7 +105,6 @@ http://localhost
 | Monitoring | <a href="#monitor">Namespace Create for Groping Prometheus and grafana and Other</a>
 | Prometheus | <a href="#prometheus">Install and configure Prometheus</a>     |
 | Grafana | <a href="#grafana">Install and configure Grafana</a>     |
-| Clean Up | <a href="#Clean">Clean up</a>     |
 #
 
 ### 📢 Pre-requisites to implement this project:
@@ -328,7 +327,7 @@ kubectl apply -f frontend-deployment.yaml
 kubectl apply -f frontend-service.yaml
 ```
 ### Step Seven
-Configure SSL Certificate Domain. Open ssl_certificate.yaml and apply your desired domain name \
+Configure SSL Certificate Domain. Open ssl_certificate.yaml and edit your desired domain name \
 ![image](/asserts/images/Screenshot_11.jpg)
 
 Apply ssl_certificate.yaml file
@@ -343,6 +342,9 @@ Apply ingress.yaml file
 ```
 kubectl apply -f ingress.yaml
 ```
+### Check Certificate 
+![image](/asserts/images/Screenshot_18.jpg)
+
 ### Check NameSpace
 ```
 kubectl get all -n chat-app
