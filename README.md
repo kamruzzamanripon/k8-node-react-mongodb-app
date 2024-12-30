@@ -6,7 +6,7 @@ This project aims to provide a real-time chat experience that's both scalable an
 ## Detailed Workflow Description:
 
 
-![image](https://github.com/user-attachments/assets/f845a188-8e70-42f7-8577-30af38e83053)
+![image](/asserts/images/01.png)
 
 
 ## ✨ Features:
@@ -86,7 +86,8 @@ http://localhost
 
 ![Login](/frontend/public/login.png)
 
-## 🛠️ Getting Started For k8s
+#
+# 🚀 Getting Started For k8s
 
 #
 > [!Important]
@@ -107,7 +108,7 @@ http://localhost
 | Clean Up | <a href="#Clean">Clean up</a>     |
 #
 
-### Pre-requisites to implement this project:
+### 📢 Pre-requisites to implement this project:
 #
 
 > [!Note]
@@ -119,7 +120,7 @@ http://localhost
 - <b>One Domain</b>
 
 #
-- ## <b id="docker">Install and configure Docker</b>
+- ## 🐳 <b id="docker">Docker Install and configure </b>
 ```bash
 sudo apt-get update
 
@@ -129,7 +130,7 @@ sudo usermod -aG docker $USER && newgrp docker
 ```
 
 #
-- ## <b id="kind">Install and configure Kind & Kubectl</b>
+- ## 📦 <b id="kind">Kind & Kubectl Install and configure </b>
 Install KIND and kubectl using the provided script. Create kind_kubectl_config.yaml file:
 ```bash
 
@@ -161,7 +162,7 @@ echo "kind & kubectl installation complete."
 > [!Note]
 > Run this script and it cerate kubectl and kind environment
 
-### 2. Setting Up the KIND Cluster
+### 2. 🛠️ Setting Up the KIND Cluster
 #### Create a kind-cluster-config.yaml file:
 
 ```
@@ -199,7 +200,7 @@ kubectl cluster-info
 
 
 #
-- ## <b id="metallb">Install Metallb</b>
+- ## 🍏 <b id="metallb">Install Metallb</b>
 > [!Note]
 > I am using Metallb for use LoadBalance. Suppose you are using Aws/Azure/DigitalOcean ect whose provide kubernates loadBalance facility then doesn't need Metallb. Here I buy VPS from a local company. They give one IP address to access VPS.
 
@@ -213,7 +214,7 @@ kubectl get all -n metallb-system
 ```
 ![image](/asserts/images/Screenshot_5.jpg)
 
-#### Create a metallb_config.yaml file:
+#### 🛠️ Create a metallb_config.yaml file:
 ```
 apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
@@ -235,7 +236,7 @@ kubectl apply -f metallb_config.yaml
 
 
 #
-- ## <b id="ingress">Install and configure Ingress</b>
+- ## ♻️ <b id="ingress">Install and configure Ingress</b>
 
 ```
 kubectl apply -f https://kind.sigs.k8s.io/examples/ingress/deploy-ingress-nginx.yaml
@@ -249,7 +250,7 @@ kubectl apply -f https://kind.sigs.k8s.io/examples/ingress/deploy-ingress-nginx.
 
 
 #
-- ## <b id="helm">Helm Install and configure</b>
+- ## 🧊 <b id="helm">Helm Install and configure</b>
 ```
 curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
 chmod 700 get_helm.sh
@@ -266,7 +267,7 @@ helm version
 
 
 #
-- ## <b id="ssl_certificate">Install and configure Cert Manager || SSL Certificate</b>
+- ## 🔒🌐 <b id="ssl_certificate">Install and configure Cert Manager || SSL Certificate</b>
 ```
 helm repo add jetstack https://charts.jetstack.io --force-update
 helm repo update
@@ -283,15 +284,16 @@ https://artifacthub.io/packages/helm/cert-manager/cert-manager
 
 
 #
-- ## <b id="project">Project Deploy and Others</b>
+- ## 📚 <b id="project">Project Deploy and Others</b>
 
 ### Step One 
 Clone below Project in your VPS
 ```
-https://github.com/kamruzzamanripon/k8-node-react-mongodb-app.git
+git clone https://github.com/kamruzzamanripon/k8-node-react-mongodb-app.git
 ```
 ### Step Two
-Go to k8s folder and you can see this file
+
+Go to k8s folder and you can see this file \
 ![image](/asserts/images/Screenshot_10.jpg)
 
 ### Step Three
@@ -326,7 +328,7 @@ kubectl apply -f frontend-deployment.yaml
 kubectl apply -f frontend-service.yaml
 ```
 ### Step Seven
-Configure SSL Certificate Domain. Open ssl_certificate.yaml and apply your desired domain name.
+Configure SSL Certificate Domain. Open ssl_certificate.yaml and apply your desired domain name \
 ![image](/asserts/images/Screenshot_11.jpg)
 
 Apply ssl_certificate.yaml file
@@ -334,7 +336,7 @@ Apply ssl_certificate.yaml file
 kubectl apply -f ssl_certificate.yaml
 ```
 ### Step Eight
-Configure  Ingress file.  Open ingress.yaml and apply your desired domain name.
+Configure  Ingress file.  Open ingress.yaml and add your desired domain name. \
 ![image](/asserts/images/Screenshot_12.jpg)
 
 Apply ingress.yaml file
@@ -359,7 +361,7 @@ Congratulations! You’ve successfully deployed the **Full-Stack Chat Applicatio
 
 
 #
-- ## <b id="monitor">Monitoring and Others [Optional]</b>
+- ## 💻 <b id="monitor">Monitoring and Others [Optional]</b>
 Now we are doing Extra features like Monitoring. It helps to know about servers and Apps.
 
 ### Create Namespace
@@ -421,7 +423,7 @@ kubectl get secret prometheus-stack-grafana -n monitoring -o jsonpath="{.data.ad
 ![image](/asserts/images/Screenshot_16.jpg)
 
 #### Grafana Dashboard.
-Here you can choose different typd Algorithm Dashboard 
+Here you can choose different type Algorithm Dashboard 
 ![image](/asserts/images/Screenshot_17.jpg)
 
 
