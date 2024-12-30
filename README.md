@@ -116,6 +116,7 @@ http://localhost
 - <b>RAM - 4GB</b>
 - <b>CPU - 2 Core(s)</b>
 - <b>Storage - 20 GB</b>
+- <b>One Domain</b>
 
 #
 - ## <b id="docker">Install and configure Docker</b>
@@ -123,13 +124,13 @@ http://localhost
 sudo apt-get update
 
 sudo apt-get install docker.io -y
-sudo usermod -aG docker ubuntu && newgrp docker
+sudo usermod -aG docker $USER && newgrp docker
 
 ```
 
 #
 - ## <b id="kind">Install and configure Kind & Kubectl</b>
-Install KIND and kubectl using the provided script:
+Install KIND and kubectl using the provided script. Create kind_kubectl_config.yaml file:
 ```bash
 
 #!/bin/bash
@@ -152,6 +153,10 @@ rm -f kubectl
 rm -rf kind
 
 echo "kind & kubectl installation complete."
+```
+
+```
+./kind_kubectl_config.yaml
 ```
 > [!Note]
 > Run this script and it cerate kubectl and kind environment
@@ -189,6 +194,8 @@ kubectl cluster-info
 ```
 > [!Note]
 > Here i add extraPortMappings for running Ingress
+
+![image](/asserts/images/Screenshot_9.jpg)
 
 
 #
@@ -269,6 +276,7 @@ Installing cert-manager CRDs
 helm install cert-manager --namespace cert-manager --version v1.16.2 jetstack/cert-manager
 ```
 https://artifacthub.io/packages/helm/cert-manager/cert-manager
+![image](/asserts/images/Screenshot_8.jpg)
 
 
 
@@ -277,9 +285,144 @@ https://artifacthub.io/packages/helm/cert-manager/cert-manager
 #
 - ## <b id="project">Project Deploy and Others</b>
 
+### Step One 
+Clone below Project in your VPS
+```
+https://github.com/kamruzzamanripon/k8-node-react-mongodb-app.git
+```
+### Step Two
+Go to k8s folder and you can see this file
+![image](/asserts/images/Screenshot_10.jpg)
+
+### Step Three
+Create Nampe Space
+```
+kubectl apply -f namespace.yaml
+```
+
+### Step Four
+Apply all Secret file
+```
+kubectl apply -f backend-secret.yaml
+kubectl apply -f jwt-secret.yaml
+kubectl apply -f mongodb-secret.yaml
+```
+
+### Step Five
+Declear Mongodb Volumes and Others
+```
+kubectl apply -f mongo-pv.yaml
+kubectl apply -f mongo-pvc.yaml
+kubectl apply -f mongodb-deployment.yaml
+kubectl apply -f mongodb-service.yaml
+```
+### Step Six
+Apply Rest of Other file
+
+```
+kubectl apply -f backend-deployment.yaml
+kubectl apply -f backend-service.yaml
+kubectl apply -f frontend-deployment.yaml
+kubectl apply -f frontend-service.yaml
+```
+### Step Seven
+Configure SSL Certificate Domain. Open ssl_certificate.yaml and apply your desired domain name.
+![image](/asserts/images/Screenshot_11.jpg)
+
+Apply ssl_certificate.yaml file
+```
+kubectl apply -f ssl_certificate.yaml
+```
+### Step Eight
+Configure  Ingress file.  Open ingress.yaml and apply your desired domain name.
+![image](/asserts/images/Screenshot_12.jpg)
+
+Apply ingress.yaml file
+```
+kubectl apply -f ingress.yaml
+```
+### Check NameSpace
+```
+kubectl get all -n chat-app
+```
+![image](/asserts/images/Screenshot_13.jpg)
+
+
+## 🎉 Conclusion
+
+Congratulations! You’ve successfully deployed the **Full-Stack Chat Application** . You can now access your Chat App. 
 
 
 
+
+
+
+
+#
+- ## <b id="monitor">Monitoring and Others [Optional]</b>
+Now we are doing Extra features like Monitoring. It helps to know about servers and Apps.
+
+### Create Namespace
+```
+kubectl create namespace monitoring
+```
+Check Namespace
+![image](/asserts/images/Screenshot_14.jpg)
+> [!Note]
+> This Namespace helping to control all monitoring app like- Prometheus, Grafana, Loki ect
+
+
+
+
+
+
+#
+- ## <b id="prometheus">Prometheus and Grafana Install and Configure</b>
+ #### Install
+ ```
+ helm install prometheus-stack prometheus-community/kube-prometheus-stack --namespace monitoring --set prometheus.service.nodePort=30000 --set grafana.service.nodePort=31000 --set grafana.service.type=NodePort --set prometheus.service.type=NodePort
+ ```
+#### Run Prometheus Via Port
+```
+ kubectl port-forward svc/prometheus-stack-kube-prom-prometheus 9090:9090 -n monitoring --address=0.0.0.0 &
+```
+now you can access Prometheus using this port. Like
+```
+http://160.191.163.33:9090
+```
+> [!Note]
+> Change IP Address
+
+![image](/asserts/images/Screenshot_2.jpg)
+
+
+
+
+
+#
+- ## <b id="grafana">Grafana Install and Configure</b>
+ #### Run Grafana Via Port
+```
+kubectl port-forward svc/prometheus-stack-grafana 3000:80 -n monitoring --address=0.0.0.0  &
+```
+#### Get Grafana Username and Password
+UserName 
+```
+admin
+```
+password
+```
+kubectl get secret prometheus-stack-grafana -n monitoring -o jsonpath="{.data.admin-password}" | base64 --decode
+```
+![image](/asserts/images/Screenshot_15.jpg)
+
+> [!Note]
+> You can change password
+![image](/asserts/images/Screenshot_16.jpg)
+
+#### Grafana Dashboard.
+Here you can choose different typd Algorithm Dashboard 
+![image](/asserts/images/Screenshot_17.jpg)
 
 
 
