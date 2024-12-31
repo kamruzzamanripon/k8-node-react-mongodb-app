@@ -351,6 +351,10 @@ kubectl get all -n chat-app
 ```
 ![image](/asserts/images/Screenshot_13.jpg)
 
+## 🌐 Browser View
+![image](/asserts/images/Screenshot_19.jpg)
+![image](/asserts/images/Screenshot_20.jpg)
+
 
 ## 🎉 Conclusion
 
