@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   frontend:
-    image: iemafzal/frontend:v1
+    image: syedkamruzzaman/chatapp-frontend:latest
     ports:
       - "8080:80"
     depends_on:
@@ -13,7 +13,7 @@ services:
       - BACKEND_URL=http://backend:5001
 
   backend:
-    image: iemafzal/backend:v1
+    image: syedkamruzzaman/chatapp-backend:latest
     ports:
       - "5001:5001"
     depends_on:
@@ -27,7 +27,7 @@ services:
       - chat-network
 
   mongo:
-    image: iemafzal/mongodb:v1
+    image: mongo:latest
     ports:
       - "27017:27017"
     environment:
