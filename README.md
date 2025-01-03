@@ -156,6 +156,7 @@ echo "kind & kubectl installation complete."
 ```
 
 ```
+sudo chmod 777 kind_kubectl_config.yaml
 ./kind_kubectl_config.yaml
 ```
 > [!Note]
@@ -273,9 +274,18 @@ helm repo update
 ```
 Installing cert-manager CRDs
 ```
-helm install cert-manager --namespace cert-manager --version v1.16.2 jetstack/cert-manager
+helm install \
+  cert-manager jetstack/cert-manager \
+  --namespace cert-manager \
+  --create-namespace \
+  --version v1.16.2 \
+  --set crds.enabled=true
 ```
 https://artifacthub.io/packages/helm/cert-manager/cert-manager
+
+```
+kubectl get all -n cert-manager
+```
 ![image](/asserts/images/Screenshot_8.jpg)
 
 
@@ -343,6 +353,10 @@ Apply ingress.yaml file
 kubectl apply -f ingress.yaml
 ```
 ### Check Certificate 
+```
+kubectl get ClusterIssuer -n chat-app
+kubectl get Certificate -n chat-app
+```
 ![image](/asserts/images/Screenshot_18.jpg)
 
 ### Check NameSpace
